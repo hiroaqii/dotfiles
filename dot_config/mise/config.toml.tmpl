@@ -1,0 +1,54 @@
+# ============================================================
+# mise global configuration
+# Managed by chezmoi
+# type: {{ .type }}
+# ============================================================
+
+[settings]
+legacy_version_file = true
+not_found_auto_install = true
+
+# ------------------------------------------------------------
+# Global tools (common)
+# ------------------------------------------------------------
+[tools]
+bun = "latest"
+chezmoi = "latest"
+fzf = "latest"
+jq = "latest"
+lazygit = "latest"
+ripgrep = "latest"
+ripgrep-all = "latest"
+rust = "latest"
+starship = "latest"
+tmux = "latest"
+uv = "latest"
+yazi = "latest"
+yq = "latest"
+zellij = "latest"
+zig = "latest"
+zoxide = "latest"
+go = "latest"
+
+# ------------------------------------------------------------
+# Python (per machine type)
+# ------------------------------------------------------------
+{{- if eq .type "work" }}
+python = "3.11"
+{{- else }}
+python = "3.13"
+{{- end }}
+
+# ------------------------------------------------------------
+# Terraform
+# - Do NOT install on work machines
+# ------------------------------------------------------------
+{{- if ne .type "work" }}
+terraform = "latest"
+{{- end }}
+
+# ------------------------------------------------------------
+# gcloud (optional: keep common)
+# ------------------------------------------------------------
+gcloud = "latest"
+
