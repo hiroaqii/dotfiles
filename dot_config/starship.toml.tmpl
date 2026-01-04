@@ -1,0 +1,259 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$hostname\
+$os\
+[](fg:surface0 bg:surface0)\
+$username\
+[](bg:surface1 fg:surface0)\
+$directory\
+[](bg:frost1 fg:surface1)\
+$git_branch\
+$git_status\
+[](fg:frost1 bg:frost0)\
+$c\
+$rust\
+$zig\
+$golang\
+$python\
+$ruby\
+$ocaml\
+$haskell\
+$lua\
+$java\
+$scala\
+$kotlin\
+$nodejs\
+$deno\
+$bun\
+$cmake\
+{{- if eq .type "work" }}
+$gcloud\
+{{- end }}
+[](fg:frost0 bg:surface3)\
+$time\
+[](fg:surface3 bg:none)\
+$cmd_duration\
+$line_break\
+$character"""
+
+# $gcloud\
+# $aws\
+# $kubernetes\
+# $docker_context\
+
+palette = 'nord_dark_powerline'
+
+# ------------------------------------------------------------
+# HOSTNAME
+# Show only on SSH:
+# 🌐 + hostname (trimmed before '.') + powerline separator
+# ------------------------------------------------------------
+[hostname]
+disabled = false
+ssh_only = true
+ssh_symbol = "🌐 "
+trim_at = "."
+format = "[ $ssh_symbol$hostname ]($style)[](fg:host_bg bg:surface0)"
+style = "bg:host_bg fg:text"
+
+# ------------------------------------------------------------
+# OS
+# ------------------------------------------------------------
+[os]
+disabled = false
+style = "bg:surface0 fg:text"
+format = "[ $symbol ]($style)"
+
+[os.symbols]
+Windows = ""
+Ubuntu  = "󰕈"
+Macos   = "󰀵"
+Linux   = "󰌽"
+Arch    = "󰣇"
+
+# ------------------------------------------------------------
+# USERNAME
+# ------------------------------------------------------------
+[username]
+show_always = true
+style_user = "bg:surface0 fg:text"
+style_root = "bg:surface0 fg:text"
+format = "[ $user ]($style)"
+
+# ------------------------------------------------------------
+# DIRECTORY
+# ------------------------------------------------------------
+[directory]
+style = "bg:surface1 fg:text"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+# ------------------------------------------------------------
+# GIT
+# ------------------------------------------------------------
+[git_branch]
+symbol = ""
+style = "bg:frost1"
+format = '[[ $symbol $branch ](fg:surface0 bg:frost1)]($style)'
+
+[git_status]
+style = "bg:frost1"
+format = '[[($all_status$ahead_behind )](fg:surface0 bg:frost1)]($style)'
+
+# ------------------------------------------------------------
+# LANGUAGES / RUNTIMES
+# ------------------------------------------------------------
+[c]
+symbol = ""
+style = "bg:frost0"
+format = '[[ $symbol $version ](fg:surface0 bg:frost0)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:frost0"
+format = '[[ $symbol $version ](fg:surface0 bg:frost0)]($style)'
+
+[zig]
+symbol = ""
+style = "bg:frost0"
+format = '[[ $symbol $version ](fg:surface0 bg:frost0)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:frost0"
+format = '[[ $symbol $version ](fg:surface0 bg:frost0)]($style)'
+
+[python]
+symbol = ""
+style = "bg:frost0"
+format = '[[ $symbol $version (\($virtualenv\)) ](fg:surface0 bg:frost0)]($style)'
+
+[ruby]
+symbol = ""
+style = "bg:frost0"
+format = '[[ $symbol $version ](fg:surface0 bg:frost0)]($style)'
+
+[ocaml]
+symbol = ""
+style = "bg:frost0"
+format = '[[ $symbol $version ](fg:surface0 bg:frost0)]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:frost0"
+format = '[[ $symbol $version ](fg:surface0 bg:frost0)]($style)'
+
+[lua]
+symbol = ""
+style = "bg:frost0"
+format = '[[ $symbol $version ](fg:surface0 bg:frost0)]($style)'
+
+[java]
+symbol = ""
+style = "bg:frost0"
+format = '[[ $symbol $version ](fg:surface0 bg:frost0)]($style)'
+
+[scala]
+symbol = ""
+style = "bg:frost0"
+format = '[[ $symbol $version ](fg:surface0 bg:frost0)]($style)'
+
+[kotlin]
+symbol = ""
+style = "bg:frost0"
+format = '[[ $symbol $version ](fg:surface0 bg:frost0)]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:frost0"
+format = '[[ $symbol $version ](fg:surface0 bg:frost0)]($style)'
+
+[deno]
+symbol = "🦕"
+style = "bg:frost0"
+format = '[[ $symbol $version ](fg:surface0 bg:frost0)]($style)'
+
+[bun]
+symbol = "🍞"
+style = "bg:frost0"
+format = '[[ $symbol $version ](fg:surface0 bg:frost0)]($style)'
+
+[gcloud]
+symbol = "󱇶"
+style = "bg:frost0"
+format = '[[ $symbol $project ](fg:surface0 bg:frost0)]($style)'
+
+[aws]
+symbol = "󰸏"
+style = "bg:frost0"
+format = '[[ $symbol $profile ](fg:surface0 bg:frost0)]($style)'
+
+[kubernetes]
+symbol = "☸"
+style = "bg:frost0"
+format = '[[ $symbol $context ](fg:surface0 bg:frost0)]($style)'
+
+[docker_context]
+symbol = ""
+style = "bg:frost0"
+format = '[[ $symbol $context ](fg:surface0 bg:frost0)]($style)'
+
+[cmake]
+symbol = "🛠"
+style = "bg:frost0"
+format = '[[ $symbol $version ](fg:surface0 bg:frost0)]($style)'
+
+# ------------------------------------------------------------
+# TIME / CMD DURATION
+# ------------------------------------------------------------
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:surface3"
+format = '[[  $time ](fg:text bg:surface3)]($style)'
+
+[cmd_duration]
+show_milliseconds = true
+# Restore the background to the terminal default (= bg:none)
+format = "[  $duration ]($style)"
+style = "fg:text bg:none"
+disabled = false
+min_time_to_notify = 45000
+
+# ------------------------------------------------------------
+# PROMPT (second line only)
+# ------------------------------------------------------------
+[line_break]
+disabled = false
+
+[character]
+# Do not specify bg (= use default background)
+# This helps prevent powerline triangles from collapsing
+success_symbol = '[❯](fg:frost2)'
+error_symbol   = '[❯](fg:frost3)'
+vimcmd_symbol  = '[❮](fg:frost2)'
+
+# ------------------------------------------------------------
+# PALETTE : Dark Nord (Polar Night–based)
+# https://www.nordtheme.com/
+# ------------------------------------------------------------
+[palettes.nord_dark_powerline]
+# Snow Storm (text)
+text = "#ECEFF4"
+
+# Polar Night (main background)
+surface0 = "#2E3440"
+surface1 = "#3B4252"
+surface3 = "#4C566A"
+
+# Frost (accent colors)
+frost0 = "#8FBCBB"
+frost1 = "#81A1C1"
+frost2 = "#88C0D0"
+frost3 = "#5E81AC"
+
+# Hostname background color (extracted)
+host_bg = "#D08770"
+
