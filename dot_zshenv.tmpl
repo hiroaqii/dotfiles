@@ -1,0 +1,52 @@
+# ~/.zshenv
+# managed by chezmoi
+
+export CLICOLOR=1
+export TERM=xterm-256color
+
+# --------------------------------------------------
+# Environment (safe + widely useful)
+# --------------------------------------------------
+# Editor
+export EDITOR=nvim
+export VISUAL=nvim
+
+# Pager
+export PAGER=less
+export LESS='-R --quit-if-one-screen --mouse'
+
+# History (storage size)
+export HISTSIZE=100000
+export SAVEHIST=100000
+export HISTFILE="$HOME/.zsh_history"
+
+# Deduplicated PATH
+typeset -U path PATH
+
+path=(
+  /usr/local/bin(N-/)
+  /usr/bin
+  /bin
+  /usr/sbin
+  /sbin
+  $path
+)
+
+# User bins
+path=(
+  $HOME/.local/bin(N-/)
+  $HOME/bin(N-/)
+  $path
+)
+
+# macOS: Homebrew paths 
+{{- if eq .chezmoi.os "darwin" }}
+path=(
+  /opt/homebrew/bin(N-/)
+  /opt/homebrew/sbin(N-/)
+  $path
+)
+{{- end }}
+
+export PATH
+

@@ -1,0 +1,93 @@
+# ~/.zshrc
+# managed by chezmoi
+
+bindkey -e
+
+# --------------------------------------------------
+# Plugins (antidote)
+# --------------------------------------------------
+if [[ -f "$HOME/.config/zsh/antidote.zsh" ]]; then
+  source "$HOME/.config/zsh/antidote.zsh"
+fi
+
+# --------------------------------------------------
+# Environment (interactive)
+# --------------------------------------------------
+# fzf (mise-managed fzf assumed)
+export FZF_DEFAULT_OPTS='
+--height=40%
+--layout=reverse
+--border
+'
+
+# --------------------------------------------------
+# History quality (setopt)
+# --------------------------------------------------
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt HIST_NO_STORE
+
+setopt EXTENDED_HISTORY
+setopt HIST_VERIFY
+
+# --------------------------------------------------
+# Aliases
+# --------------------------------------------------
+# lsd
+alias ls='lsd'
+alias ll='ls -laF'
+alias l='ls -1'
+alias lt='ls --tree'
+alias lS='ls --sizesort'
+
+# basic navigation / editor
+alias vi='nvim'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias mkdir='mkdir -p'
+
+# --------------------------------------------------
+# Completion
+# --------------------------------------------------
+autoload -Uz compinit
+
+_compdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+mkdir -p "${_compdump:h}"
+compinit -d "$_compdump"
+
+autoload -U +X bashcompinit && bashcompinit
+
+# terraform completion
+if command -v terraform >/dev/null 2>&1; then
+  complete -o nospace -C "$(command -v terraform)" terraform
+fi
+
+# --------------------------------------------------
+# mise
+# --------------------------------------------------
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi
+
+# --------------------------------------------------
+# Prompt / directory
+# --------------------------------------------------
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+fi
+
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi
+
+# --------------------------------------------------
+# Local overrides (NOT managed by git)
+# --------------------------------------------------
+LOCAL_ZSH="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/local.zsh"
+[[ -r "$LOCAL_ZSH" ]] && source "$LOCAL_ZSH"
+

@@ -1,0 +1,12 @@
+# ~/.config/zsh/plugins.txt
+# managed by chezmoi
+
+# completion / suggestion
+zsh-users/zsh-completions
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-syntax-highlighting
+
+# fzf helpers
+Aloxaf/fzf-tab
+wfxr/forgit
+
