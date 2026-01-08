@@ -1,0 +1,31 @@
+{{- if eq .chezmoi.os "darwin" }}
+# ============================================================
+# Ghostty local overrides (macOS)
+# ============================================================
+
+background-opacity = 0.85
+background-blur-radius = 20
+
+macos-titlebar-style = transparent
+window-theme = ghostty
+
+window-padding-balance = true
+window-padding-x = 20
+window-padding-y = 6
+
+resize-overlay = never
+{{- end }}
+
+{{- if eq .chezmoi.os "linux" }}
+# ============================================================
+# Ghostty local overrides (Linux)
+# ============================================================
+
+background-opacity = 0.9
+
+# Keep this file minimal on Linux.
+# Uncomment if Super+C/V conflicts with window manager.
+# keybind = super+c=copy_to_clipboard
+# keybind = super+v=paste_from_clipboard
+{{- end }}
+

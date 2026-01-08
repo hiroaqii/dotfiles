@@ -1,0 +1,63 @@
+# ============================================================
+# Ghostty base config (shared across Arch Linux / macOS)
+# - tmux manages all splits and resizing
+# - Ghostty handles rendering, input, and SSH stability
+# - Theme: Nord Wave
+# ============================================================
+
+# ----------------------------
+# Font (fallback order)
+# ----------------------------
+font-family = "UDEV Gothic 35NF"
+font-family = "JetBrainsMono Nerd Font Mono"
+font-size = 14.5
+
+# Disable ligatures for code/TUI correctness
+font-feature = -dlig
+font-feature = -calt
+font-feature = -liga
+
+# ----------------------------
+# Theme (terminal content)
+# ----------------------------
+theme = Nord Wave
+
+# ----------------------------
+# Window / Layout (minimal and stable)
+# ----------------------------
+window-padding-x = 14
+window-padding-y = 14
+
+# Prevent accidental surface closure
+confirm-close-surface = true
+
+# ----------------------------
+# Cursor
+# ----------------------------
+cursor-style = block
+cursor-style-blink = false
+
+# ----------------------------
+# Shell integration
+# - Prevent TERM / SSH / sudo breakage
+# ----------------------------
+shell-integration-features = cursor,title,ssh-env,ssh-terminfo,sudo
+
+# ----------------------------
+# Clipboard (safe defaults)
+# ----------------------------
+keybind = shift+insert=paste_from_clipboard
+keybind = control+insert=copy_to_clipboard
+
+# ----------------------------
+# tmux prefix (Ctrl-Space must send NUL / 0x00)
+# ----------------------------
+keybind = ctrl+space=text:"\x00"
+keybind = ctrl+@=text:"\x00"
+
+# ----------------------------
+# Optional per-OS/per-host overrides
+# Use '?' so missing file is ignored
+# ----------------------------
+config-file = "?~/.config/ghostty/local.conf"
+
