@@ -8,37 +8,38 @@
 #     - Arch Linux
 #
 # What it does:
-#   - Installs mise (runtime/tool version manager)
-#   - Installs antidote (zsh plugin manager)
+#   - Installs mise     (runtime/tool version manager) if missing
+#   - Installs chezmoi  (dotfile manager) if missing
+#   - Installs antidote (zsh plugin manager) if missing
 #
 # What it does NOT do:
-#   - Install Homebrew (intentionally)
-#   - Modify your shell config files (chezmoi templates should handle that)
-#
-# Expected usage:
-#   1) Apply your chezmoi dotfiles first (or at least ensure this file exists)
-#   2) Run: bootstrap
+#   - Upgrade mise / chezmoi / antidote (manual by design)
+#   - Install Homebrew
+#   - Modify shell configuration files
 #
 # Notes:
-#   - This script is safe to run multiple times.
-#   - It assumes you can use network access (curl/git).
+#   - Safe to run multiple times
+#   - Requires network access (curl / git)
 # -----------------------------------------------------------------------------
 
 set -Eeuo pipefail
 
 # ---- logging helpers ---------------------------------------------------------
-log()  { printf '%s\n' "INFO: $*"; }
+log() { printf '%s\n' "INFO: $*"; }
 warn() { printf '%s\n' "WARN: $*" >&2; }
-die()  { printf '%s\n' "ERROR: $*" >&2; exit 1; }
+die() {
+  printf '%s\n' "ERROR: $*" >&2
+  exit 1
+}
 
 have() { command -v "$1" >/dev/null 2>&1; }
 
 # ---- platform detection ------------------------------------------------------
 OS=""
 case "$(uname -s)" in
-  Darwin) OS="macos" ;;
-  Linux)  OS="linux" ;;
-  *) die "Unsupported OS: $(uname -s)" ;;
+Darwin) OS="macos" ;;
+Linux) OS="linux" ;;
+*) die "Unsupported OS: $(uname -s)" ;;
 esac
 
 is_arch() {
@@ -47,7 +48,6 @@ is_arch() {
 
 # ---- prerequisites -----------------------------------------------------------
 ensure_prereqs() {
-  # We require: curl, git
   if ! have curl; then
     die "curl is required but not found. Please install curl first."
   fi
@@ -70,38 +70,54 @@ install_mise() {
   fi
 
   log "Installing mise..."
-
-  # Official installer supports macOS/Linux without requiring brew.
-  # It typically installs to ~/.local/bin and/or configures shell integration
-  # (integration should be handled by your dotfiles, not this script).
-  #
-  # If your environment uses a proxy/corporate network, ensure curl can reach it.
   curl -fsSL https://mise.jdx.dev/install.sh | sh
 
-  # Try to make mise available in the current process without requiring a new shell.
-  # Common install location:
   if [[ -x "${HOME}/.local/bin/mise" ]]; then
     export PATH="${HOME}/.local/bin:${PATH}"
   fi
 
   if have mise; then
-    log "mise installed: $(mise --version 2>/dev/null || echo 'installed')"
+    log "mise installed: $(mise --version 2>/dev/null || echo installed)"
   else
-    warn "mise installer finished, but 'mise' is still not on PATH in this shell."
-    warn "Open a new terminal, or add ~/.local/bin to PATH, then verify with: mise --version"
+    warn "mise installed but not on PATH yet; open a new shell."
   fi
+
+  log "Note: mise upgrade is manual (mise self-update)."
+}
+
+# ---- chezmoi install ---------------------------------------------------------
+install_chezmoi() {
+  if have chezmoi; then
+    log "chezmoi already installed: $(command -v chezmoi)"
+    return 0
+  fi
+
+  log "Installing chezmoi..."
+
+  # Official installer (binary install, no package manager required)
+  sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "${HOME}/.local/bin"
+
+  if [[ -x "${HOME}/.local/bin/chezmoi" ]]; then
+    export PATH="${HOME}/.local/bin:${PATH}"
+  fi
+
+  if have chezmoi; then
+    log "chezmoi installed: $(chezmoi --version | head -n1)"
+  else
+    warn "chezmoi installed but not on PATH yet; open a new shell."
+  fi
+
+  log "Note: chezmoi upgrade is manual (chezmoi upgrade)."
 }
 
 # ---- antidote install --------------------------------------------------------
 install_antidote() {
-  # Recommended: keep plugin managers under XDG data dir.
   local target_dir="${XDG_DATA_HOME:-$HOME/.local/share}/antidote"
   local repo_url="https://github.com/mattmc3/antidote.git"
 
   if [[ -d "${target_dir}/.git" ]]; then
     log "antidote already installed at: ${target_dir}"
-    log "Updating antidote (git pull)..."
-    git -C "${target_dir}" pull --ff-only || warn "Failed to update antidote (you can update manually later)."
+    log "Note: antidote update is manual."
     return 0
   fi
 
@@ -110,25 +126,25 @@ install_antidote() {
   git clone --depth=1 "${repo_url}" "${target_dir}"
 
   log "antidote installed."
-  log "If your zsh config expects a different path, adjust it to use:"
-  log "  ${target_dir}"
 }
 
 # ---- main -------------------------------------------------------------------
 main() {
-  log "Starting bootstrap on OS=${OS} (arch=$(is_arch && echo yes || echo no))"
+  log "Starting bootstrap (OS=${OS}, arch=$(is_arch && echo yes || echo no))"
 
   ensure_prereqs
   install_mise
+  install_chezmoi
   install_antidote
 
   log "Bootstrap complete."
-  log "Next steps:"
-  log "  - Open a new terminal (recommended)"
-  log "  - Verify:"
-  log "      mise --version"
-  log "      test -d \"${XDG_DATA_HOME:-$HOME/.local/share}/antidote\" && echo antidote-ok"
+  log "Recommended next steps:"
+  log "  - Open a new terminal"
+  log "  - Run:"
+  log "      chezmoi apply"
+  log "  - Manual upgrades:"
+  log "      mise self-update"
+  log "      chezmoi upgrade"
 }
 
 main "$@"
-
