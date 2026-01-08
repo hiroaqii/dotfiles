@@ -23,6 +23,11 @@ resize-overlay = never
 
 background-opacity = 0.9
 
+# Enable Ctrl-Space as tmux prefix on Linux.
+# On macOS, Ctrl-Space is intercepted by IME/input methods and cannot reliably send NUL (0x00).
+keybind = ctrl+space=text:"\x00"
+
+
 # Keep this file minimal on Linux.
 # Uncomment if Super+C/V conflicts with window manager.
 # keybind = super+c=copy_to_clipboard
