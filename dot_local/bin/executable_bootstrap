@@ -20,6 +20,12 @@
 # Notes:
 #   - Safe to run multiple times
 #   - Requires network access (curl / git)
+#
+# git clone & execute:
+#  $ git clone git@github.com:hiroaqii/dotfiles.git ~/.local/share/chezmoi
+#  $ cd ~/.local/share/chezmoi/dot_local/bin/
+#  $ sh executable_bootstrap
+#
 # -----------------------------------------------------------------------------
 
 set -Eeuo pipefail
@@ -139,9 +145,18 @@ main() {
 
   log "Bootstrap complete."
   log "Recommended next steps:"
+  log "  *Prerequisite*: Set the default shell to zsh."
   log "  - Open a new terminal"
+  log "  - Edit:"
+  log "      mkdir ~/.config/chezmoi"
+  log "      vi ~/.config/chezmoi/chezmoi.toml"
+  log "      ↓↓↓"
+  log "      [data]"
+  log "         type = \"xxxx\""
   log "  - Run:"
-  log "      chezmoi apply"
+  log "      ~/.local/bin/chezmoi diff"
+  log "      ~/.local/bin/chezmoi apply"
+  log "      mise upgrade"
   log "  - Manual upgrades:"
   log "      mise self-update"
   log "      chezmoi upgrade"
