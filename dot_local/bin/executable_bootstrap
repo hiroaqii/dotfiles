@@ -11,9 +11,10 @@
 #   - Installs mise     (runtime/tool version manager) if missing
 #   - Installs chezmoi  (dotfile manager) if missing
 #   - Installs antidote (zsh plugin manager) if missing
+#   - Installs tpm      (tmux plugin manager) if missing
 #
 # What it does NOT do:
-#   - Upgrade mise / chezmoi / antidote (manual by design)
+#   - Upgrade mise / chezmoi / antidote / tpm (manual by design)
 #   - Install Homebrew
 #   - Modify shell configuration files
 #
@@ -134,6 +135,25 @@ install_antidote() {
   log "antidote installed."
 }
 
+# ---- tpm install -------------------------------------------------------------
+install_tpm() {
+  local target_dir="${HOME}/.tmux/plugins/tpm"
+  local repo_url="https://github.com/tmux-plugins/tpm.git"
+
+  if [[ -d "${target_dir}/.git" ]]; then
+    log "tpm already installed at: ${target_dir}"
+    log "Note: tpm update is manual (prefix + U in tmux)."
+    return 0
+  fi
+
+  log "Installing tpm to: ${target_dir}"
+  mkdir -p "$(dirname "${target_dir}")"
+  git clone --depth=1 "${repo_url}" "${target_dir}"
+
+  log "tpm installed."
+  log "Note: Run 'prefix + I' in tmux to install plugins."
+}
+
 # ---- main -------------------------------------------------------------------
 main() {
   log "Starting bootstrap (OS=${OS}, arch=$(is_arch && echo yes || echo no))"
@@ -142,6 +162,7 @@ main() {
   install_mise
   install_chezmoi
   install_antidote
+  install_tpm
 
   log "Bootstrap complete."
   log "Recommended next steps:"
@@ -160,6 +181,8 @@ main() {
   log "  - Manual upgrades:"
   log "      mise self-update"
   log "      chezmoi upgrade"
+  log "  - tmux plugins:"
+  log "      Start tmux, then press 'prefix + I' to install plugins"
 }
 
 main "$@"
