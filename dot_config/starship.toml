@@ -4,8 +4,6 @@ format = """
 $hostname\
 $os\
 [](fg:surface0 bg:surface0)\
-$username\
-[](bg:surface1 fg:surface0)\
 $directory\
 [](bg:frost1 fg:surface1)\
 $git_branch\
