@@ -169,7 +169,7 @@ main() {
   log "  *Prerequisite*: Set the default shell to zsh."
   log "  - Open a new terminal"
   log "  - Edit:"
-  log "      mkdir ~/.config/chezmoi"
+  log "      mkdir -p ~/.config/chezmoi"
   log "      vi ~/.config/chezmoi/chezmoi.toml"
   log "      ↓↓↓"
   log "      [data]"
