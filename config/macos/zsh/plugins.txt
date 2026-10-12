@@ -1,0 +1,5 @@
+# Load after compinit. fzf-tab must precede widget-wrapping plugins.
+Aloxaf/fzf-tab
+wfxr/forgit
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-syntax-highlighting

@@ -1,0 +1,11 @@
+# Leave Omarchy-managed CLI tools on the system PATH.
+# Node/Python remain mise-managed for version selection.
+[settings]
+disable_tools = ["fzf", "herdr", "jq", "lazygit", "ripgrep", "starship", "zoxide"]
+
+[tools]
+# Mac uses Homebrew; only Omarchy installs gitframe through mise.
+"github:hiroaqii/gitframe" = "latest"
+
+[dotfiles]
+"~/.config/hypr/dotfiles-mouse.lua" = { source = "../config/omarchy/hypr/mouse.lua", mode = "symlink" }

@@ -1,0 +1,11 @@
+# macOS uses the shared mise tools.
+# Homebrew formula/cask definitions will be added after reviewing the Mac.
+
+[bootstrap.repos]
+"~/.local/share/antidote" = { url = "https://github.com/mattmc3/antidote.git", ref = "main" }
+
+[dotfiles]
+"~/.config/zsh/plugins.txt" = { source = "../config/macos/zsh/plugins.txt", mode = "symlink" }
+"~/.config/zsh/dotfiles.zsh" = { source = "../config/macos/zsh/dotfiles.zsh", mode = "symlink" }
+
+"~/.config/zsh/completions.txt" = { source = "../config/macos/zsh/completions.txt", mode = "symlink" }

@@ -1,0 +1,4 @@
+# Personal runtimes and tools.
+[tools]
+python = "3.14"
+terraform = "latest"

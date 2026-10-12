@@ -1,0 +1,50 @@
+# Shared development tools migrated from dot_config/mise/config.toml.tmpl.
+# Select exactly one OS and one purpose: -E macos,work or -E omarchy,personal.
+# zellij and chezmoi are intentionally excluded.
+# Existing version requests are preserved pending review.
+[tools]
+bun = "latest"
+codex = "latest"
+fzf = "latest"
+gh = "latest"
+herdr = "latest"
+jq = "latest"
+lazygit = "latest"
+ripgrep = "latest"
+ripgrep-all = "latest"
+rust = "latest"
+starship = "latest"
+uv = "latest"
+yazi = "latest"
+yq = "latest"
+zig = "0.16"
+zls = "0.16.0"
+zoxide = "latest"
+go = "latest"
+lsd = "latest"
+node = "lts"
+gcloud = "latest"
+
+[settings.task]
+run_auto_install = false
+
+[dotfiles]
+"~/.config/starship.toml" = { source = "../config/common/starship/starship.toml", mode = "symlink" }
+"~/.config/lsd/config.yaml" = { source = "../config/common/lsd/config.yaml", mode = "symlink" }
+"~/.config/lsd/colors.yaml" = { source = "../config/common/lsd/colors.yaml", mode = "symlink" }
+
+
+[tasks."setup:plan"]
+run = "bash \"{{ config_root }}/../scripts/manage.sh\" setup:plan"
+
+[tasks."setup"]
+run = "bash \"{{ config_root }}/../scripts/manage.sh\" setup"
+
+[tasks."status"]
+run = "bash \"{{ config_root }}/../scripts/manage.sh\" status"
+
+[tasks."update"]
+run = "bash \"{{ config_root }}/../scripts/manage.sh\" update"
+
+[tasks."upgrade"]
+run = "bash \"{{ config_root }}/../scripts/manage.sh\" upgrade"
