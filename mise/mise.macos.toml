@@ -5,6 +5,7 @@
 "~/.local/share/antidote" = { url = "https://github.com/mattmc3/antidote.git", ref = "main" }
 
 [dotfiles]
+"~/.config/herdr/config.toml" = { source = "../config/macos/herdr/config.toml", mode = "symlink" }
 "~/.config/zsh/plugins.txt" = { source = "../config/macos/zsh/plugins.txt", mode = "symlink" }
 "~/.config/zsh/dotfiles.zsh" = { source = "../config/macos/zsh/dotfiles.zsh", mode = "symlink" }
 
