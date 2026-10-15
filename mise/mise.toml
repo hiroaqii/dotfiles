@@ -5,6 +5,7 @@
 [tools]
 bun = "latest"
 codex = "latest"
+"aqua:fish-shell/fish-shell" = "latest"
 fzf = "latest"
 gh = "latest"
 herdr = "latest"
@@ -29,6 +30,7 @@ gcloud = "latest"
 run_auto_install = false
 
 [dotfiles]
+"~/.config/fish/conf.d/90-dotfiles.fish" = { source = "../config/common/fish/conf.d/90-dotfiles.fish", mode = "symlink" }
 "~/.config/starship.toml" = { source = "../config/common/starship/starship.toml", mode = "symlink" }
 "~/.config/lsd/config.yaml" = { source = "../config/common/lsd/config.yaml", mode = "symlink" }
 "~/.config/lsd/colors.yaml" = { source = "../config/common/lsd/colors.yaml", mode = "symlink" }
