@@ -1,4 +1,4 @@
-# Shared development tools migrated from dot_config/mise/config.toml.tmpl.
+# Shared development tools for macOS and Omarchy.
 # Select exactly one OS and one purpose: -E macos,work or -E omarchy,personal.
 # zellij and chezmoi are intentionally excluded.
 # Existing version requests are preserved pending review.
