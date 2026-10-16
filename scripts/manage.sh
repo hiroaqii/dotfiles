@@ -115,7 +115,8 @@ case "$action" in
     m upgrade
     m bootstrap repos update
     if [[ $platform == macos ]]; then
-      m exec -- zsh -c 'source "$HOME/.local/share/antidote/antidote.zsh"; antidote update'
+      # Keep Antidote itself at the ref managed by mise; update only plugins.
+      m exec -- zsh -c 'source "$HOME/.local/share/antidote/antidote.zsh"; antidote update --bundles'
     fi
     write_global_tools
     echo 'OS-managed packages and mise itself are not upgraded by this task.'

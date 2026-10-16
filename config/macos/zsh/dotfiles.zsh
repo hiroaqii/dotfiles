@@ -54,7 +54,7 @@ alias ...='cd ../..'
 _dotfiles_zsh_dir="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 if [[ -r "$HOME/.local/share/antidote/antidote.zsh" ]]; then
   source "$HOME/.local/share/antidote/antidote.zsh"
-  source <(antidote bundle < "$_dotfiles_zsh_dir/completions.txt")
+  source =(antidote bundle < "$_dotfiles_zsh_dir/completions.txt")
 fi
 autoload -Uz compinit
 _dotfiles_compdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"

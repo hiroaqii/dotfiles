@@ -2,7 +2,8 @@
 # Homebrew formula/cask definitions will be added after reviewing the Mac.
 
 [bootstrap.repos]
-"~/.local/share/antidote" = { url = "https://github.com/mattmc3/antidote.git", ref = "main" }
+# Upgrade Antidote deliberately by changing this release tag.
+"~/.local/share/antidote" = { url = "https://github.com/mattmc3/antidote.git", ref = "v2.3.0" }
 
 [dotfiles]
 "~/.config/herdr/config.toml" = { source = "../config/macos/herdr/config.toml", mode = "symlink" }
